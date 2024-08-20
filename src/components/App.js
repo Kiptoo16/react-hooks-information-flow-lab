@@ -3,6 +3,8 @@ import ShoppingList from './ShoppingList';
 import itemData from '../data/items';
 import Header from './Header';
 
+import App from './components/App';
+
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 

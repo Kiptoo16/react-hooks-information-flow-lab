@@ -1,30 +1,27 @@
-import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
-import App from "../components/App";
+import { render, screen, fireEvent } from '@testing-library/react';
+import App from '../components/App'; // Adjust according to your file structure
 
-test("displays in 'light' mode when initialized", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".light")).toBeInTheDocument();
+test('changes to dark mode when the button is clicked', () => {
+  render(<App />);
+
+  // Click the "Dark Mode" button
+  fireEvent.click(screen.getByRole('button', { name: /Dark Mode/i }));
+
+  // Check if the dark mode class is applied
+  expect(screen.getByRole('button', { name: /Light Mode/i })).toBeInTheDocument();
+  expect(screen.getByText('Shopster')).toHaveClass('dark');
 });
 
-test("changes to 'dark' mode when the button is clicked", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".light")).toBeInTheDocument();
+test('changes back to light mode when the button is clicked again', () => {
+  render(<App />);
 
-  fireEvent.click(screen.getByText(/ Mode/));
+  // Click the "Dark Mode" button
+  fireEvent.click(screen.getByRole('button', { name: /Dark Mode/i }));
 
-  expect(container.querySelector(".dark")).toBeInTheDocument();
-});
+  // Click the "Light Mode" button
+  fireEvent.click(screen.getByRole('button', { name: /Light Mode/i }));
 
-test("changes back to 'light' mode when the button is clicked twice", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".light")).toBeInTheDocument();
-
-  fireEvent.click(screen.getByText(/ Mode/));
-
-  expect(container.querySelector(".dark")).toBeInTheDocument();
-
-  fireEvent.click(screen.getByText(/ Mode/));
-
-  expect(container.querySelector(".light")).toBeInTheDocument();
+  // Check if the light mode class is applied
+  expect(screen.getByRole('button', { name: /Dark Mode/i })).toBeInTheDocument();
+  expect(screen.getByText('Shopster')).toHaveClass('light');
 });
